@@ -1,0 +1,55 @@
+﻿@model Urun
+@{
+    bool duzenleMi = ViewBag.Action == "Duzenle";
+    ViewBag.Title = duzenleMi ? "Urun Düzenle" : "Urun Ekle";
+}
+
+    <h2>@(duzenleMi ? "Urun Düzenle" : "Urun Ekle")</h2>
+
+@using (Html.BeginForm(duzenleMi ? "UrunDuzenle" : "UrunEkle", "Urun", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(x => x.UrunAd)
+        @Html.TextBoxFor(x => x.UrunAd, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.UrunAd, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.KategoriId)
+        @Html.DropDownListFor(x => x.KategoriId, null, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.KategoriId, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BirimFiyat)
+        @Html.TextBoxFor(x => x.BirimFiyat, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BirimFiyat, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Aciklama)
+        @Html.TextBoxFor(x => x.Aciklama, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Aciklama, null, new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">@(duzenleMi ? "Kaydet" : "Ekle")</button>
+    @Html.ActionLink("İptal", "Index", "Home", new { @class = "btn btn-secondary" })
+
+}
+
+
+
+@section scripts{
+    <script>
+        $("#BirimFiyat").inputmask("decimal", { digits: 2, rightAlign: false, radixPoint: "," });
+
+    </script>
+
+
+
+
+}
+
+
